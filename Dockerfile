@@ -1,6 +1,6 @@
-ARG python_version
+ARG lambda_image_name
 ARG path_to_site_packages
-FROM public.ecr.aws/lambda/python:$python_version
+FROM $lambda_image_name
 ENV local_path_to_site_packages=$path_to_site_packages
 
 WORKDIR /sources
