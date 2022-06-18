@@ -1,4 +1,4 @@
-ZIP_FILE_NAME=python_snowflake_connector_layer.zip
+ZIP_FILE_NAME=python_great_expectations_layer.zip
 DOCKER_IMAGE_NAME=create-lambda-layer
 PYTHON_VERSION=3.9
 AWS_LAMBDA_IMAGE_NAME=public.ecr.aws/lambda/python:${PYTHON_VERSION}
@@ -8,20 +8,21 @@ LAYER_LOCATION=layer
 PATH_TO_SOURCES=${CURRENT_DIRECTORY}/${LAYER_LOCATION}
 PATH_TO_PACKAGES=./python/lib/python${PYTHON_VERSION}/site-packages
 PATH_TO_ZIP_FILE=${CURRENT_DIRECTORY}/${LAYER_LOCATION}/${ZIP_FILE_NAME}
+UNZIP_LOCATION=example_unzip
 
 
 zip_size:
-	echo `ls -alh ${PATH_TO_ZIP_FILE}`
+	echo `ls -alh ${ZIP_FILE_NAME}`
 
 zip_contents:
 	unzip -l ${ZIP_FILE_NAME}
 
 archive:
-	zip -r9 ${PATH_TO_ZIP_FILE} ${PATH_TO_SOURCES}/python -x "*/__pycache__/*" -x "*/tests/*" \
+	cd ${LAYER_LOCATION} && zip -r9 ${ZIP_FILE_NAME} ./python -x "*/__pycache__/*" -x "*/tests/*" \
 		&& make zip_size
 
 unzip:
-	unzip ${ZIP_FILE_NAME} -d example_unzip
+	cd ${LAYER_LOCATION} && rm -rf ${UNZIP_LOCATION}  && mkdir ${UNZIP_LOCATION} && unzip ${ZIP_FILE_NAME} -d ${UNZIP_LOCATION}
 
 clean:
 	cd ${LAYER_LOCATION} && rm -r ${PATH_TO_PACKAGES}/* && rm ${PATH_TO_SOURCES}/${ZIP_FILE_NAME} && rm -r example_unzip/*
