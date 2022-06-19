@@ -15,7 +15,7 @@ zip_size:
 	echo `ls -alh ${ZIP_FILE_NAME}`
 
 zip_contents:
-	unzip -l ${ZIP_FILE_NAME}
+	unzip -l ${PATH_TO_ZIP_FILE}
 
 archive:
 	cd ${LAYER_LOCATION} && zip -r9 ${ZIP_FILE_NAME} ./python -x "*/__pycache__/*" -x "*/tests/*" \
