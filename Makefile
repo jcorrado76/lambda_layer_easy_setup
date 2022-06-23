@@ -10,16 +10,16 @@ PATH_TO_PACKAGES=./python/lib/python${PYTHON_VERSION}/site-packages
 PATH_TO_ZIP_FILE=${CURRENT_DIRECTORY}/${LAYER_LOCATION}/${ZIP_FILE_NAME}
 UNZIP_LOCATION=example_unzip
 
+.PHONY: layer zip_size
 
 zip_size:
-	echo `ls -alh ${ZIP_FILE_NAME}`
+	echo `ls -alh ${PATH_TO_ZIP_FILE}`
 
 zip_contents:
 	unzip -l ${PATH_TO_ZIP_FILE}
 
 archive:
-	cd ${LAYER_LOCATION} && zip -r9 ${ZIP_FILE_NAME} ./python -x "*/__pycache__/*" -x "*/tests/*" \
-		&& make zip_size
+	cd ${LAYER_LOCATION} && zip -r9 ${ZIP_FILE_NAME} ./python -x "*/__pycache__/*" -x "*/tests/*"
 
 unzip:
 	cd ${LAYER_LOCATION} && rm -rf ${UNZIP_LOCATION}  && mkdir ${UNZIP_LOCATION} && unzip ${ZIP_FILE_NAME} -d ${UNZIP_LOCATION}
@@ -40,8 +40,6 @@ run:
 	rm -rf ${LAYER_LOCATION}/python && \
 		mkdir -p ${LAYER_LOCATION}/${PATH_TO_PACKAGES} && \
 		docker run -v ${PATH_TO_SOURCES}:/${LAYER_LOCATION} --rm ${DOCKER_IMAGE_NAME}
-
-.PHONY: layer
 
 layer:
 	make run && make archive

@@ -61,3 +61,8 @@ If you need something bigger, then it's possible to create your own docker image
 But in this case, you'll need an image repository, and you'll need to deploy the entire image to the Lambda. 
 
 This repo can probably be worked with to start off the creation of an entire custom Lambda image. 
+
+If you want to see the size of your output zip archive, you can run:
+```bash
+make zip_size
+```
