@@ -1,4 +1,4 @@
-ZIP_FILE_NAME=python_great_expectations_layer.zip
+ZIP_FILE_NAME=python_numpy_layer.zip
 DOCKER_IMAGE_NAME=create-lambda-layer
 PYTHON_VERSION=3.9
 AWS_LAMBDA_IMAGE_NAME=public.ecr.aws/lambda/python:${PYTHON_VERSION}

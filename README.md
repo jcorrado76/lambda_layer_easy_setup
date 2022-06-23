@@ -11,20 +11,21 @@ In that environment, your installation commands become as simple as system insta
 The directory structure for this repo looks like:
 ```
 lambda_layer_easy_setup
-├── Dockerfile
-├── Makefile
+├── Dockerfile - create a thin docker image on top of the base lambda runtime
+├── Makefile - abstract away the shell commands for running docker commands and zip commands; also provides some helper commands to introspect the contents and size of your archive
 ├── README.md
-└── layer
-    ├── example_unzip
-    ├── python
-    ├── python_great_expectations_layer.zip
-    └── requirements.txt
+└── layer - this is the working area for the generated dependencies and zip archive
+    ├── example_unzip - this is a directory for unzipping the dependencies to check they unzip in the correct paths
+    ├── python - this is the directory whose directry contains the correct structure expected by lambda 
+    ├── python_numpy_layer.zip - this is the zip archive that will be uploaded to create a lambda layer
+    └── requirements.txt - this is where you'll enter your requirements
 ```
 # Dependencies
 ***
 The dependencies of this repo are:
 * the docker CLI installed on your machine
 * access to the internet to pull the AWS Lambda image and to pip install requirements from PyPI
+* make
 # Usage
 ***
 First, you need to build the custom docker image:
